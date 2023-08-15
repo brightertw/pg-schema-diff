@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math"
+	"os"
 	"strings"
 
 	"github.com/manifoldco/promptui"
@@ -31,6 +32,11 @@ func header(header string) string {
 // MustContinuePrompt prompts the user if they want to continue, and returns an error otherwise.
 // promptui requires the ContinueLabel to be one line
 func mustContinuePrompt(continueLabel string) error {
+	// Brighter.tw: overpass interaction prompt
+	nonInteractive := os.Getenv("PG_SCHEMA_DIFF_NON_INTERACTIVE")
+	if nonInteractive != "" {
+		return nil
+	}
 	if len(continueLabel) == 0 {
 		continueLabel = "Continue?"
 	}
